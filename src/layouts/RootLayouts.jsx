@@ -9,6 +9,7 @@ const RootLayouts = () => {
       <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>
+      
     </div>
   );
 };

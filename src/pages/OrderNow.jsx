@@ -1,26 +1,16 @@
 import { useState } from "react";
-import { Facebook, Twitter, Linkedin } from "lucide-react";
-import { NavLink } from "react-router";
-
-import Tshirt1 from "../../src/assets/t-shirt1.png";
-import Tshirt2 from "../../src/assets/t-shirt2.png";
-import Tshirt3 from "../../src/assets/t-shirt3.png";
-import Tshirt4 from "../../src/assets/t-shirt4.png";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+import sizeChart from "../assets/size chart.png"
 
 export default function OrderNow() {
-  // State for main image
-  const [mainImage, setMainImage] = useState(Tshirt4);
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const { clickedProduct, allProducts } = location.state;
 
-  // State for selected size
+  const [mainImage, setMainImage] = useState(clickedProduct.img);
   const [selectedSize, setSelectedSize] = useState("S");
-
-  const product = {
-    name: "MENS TWILL PAYJAMA",
-    price: 850,
-    image: mainImage,
-    size: selectedSize,
-    colors: [Tshirt1, Tshirt2, Tshirt3, Tshirt4],
-  };
 
   const sizes = [
     { label: "S", available: true },
@@ -30,16 +20,29 @@ export default function OrderNow() {
     { label: "XXL", available: false },
   ];
 
+  // Only same title products excluding clicked product
+  const sameTitleProducts = allProducts
+    .filter(p => p.title === clickedProduct.title && p.id !== clickedProduct.id)
+    .slice(0, 3); // only 3 variations
+
+  // For left images: main image + 3 variations
+  const sideImages = [clickedProduct.img, ...sameTitleProducts.map(p => p.img)];
+
+  const handleOrderNow = () => {
+    navigate("/checkout", {
+      state: { product: clickedProduct, size: selectedSize, image: mainImage },
+    });
+  };
+
   return (
-    <div className="bg-gray-50 -mt-5 py-8 px-4">
+    <div className="bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Main Product Section */}
+        {/* MAIN SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {/* Product Images */}
+          {/* LEFT IMAGE */}
           <div className="flex gap-4">
-            {/* Thumbnails */}
             <div className="flex flex-col gap-3 w-20">
-              {product.colors.map((img, idx) => (
+              {sideImages.map((img, idx) => (
                 <div
                   key={idx}
                   className={`w-20 h-24 rounded-lg border-2 cursor-pointer overflow-hidden ${
@@ -47,63 +50,42 @@ export default function OrderNow() {
                   }`}
                   onClick={() => setMainImage(img)}
                 >
-                  <img
-                    src={img}
-                    alt={`thumbnail${idx + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={img} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
 
-            {/* Main Image */}
             <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-              <img
-                src={mainImage}
-                alt="main product"
-                className="w-full h-full object-cover"
-              />
+              <img src={mainImage} className="w-full h-full object-cover" alt="main-product" />
             </div>
           </div>
 
-          {/* Product Details */}
+          {/* RIGHT DETAILS */}
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-[#101828] mb-4">
-              {product.name}
-            </h1>
-
-            {/* Price */}
+            <h1 className="text-3xl font-bold text-[#101828] mb-4">{clickedProduct.title}</h1>
             <div className="mb-6">
-              <span className="text-2xl font-bold text-[#101828]">
-                ৳ {product.price.toFixed(2)}
-              </span>
+              <span className="text-2xl font-bold text-[#101828]">৳ {clickedProduct.price.toFixed(2)}</span>
             </div>
 
-            {/* Color Section */}
+            {/* COLOR SELECTION */}
             <div className="mb-6">
               <p className="text-[#9599A0] text-sm mb-3">Color:</p>
               <div className="flex gap-3">
-                {product.colors.map((img, idx) => (
+                {sideImages.map((img, idx) => (
                   <div
                     key={idx}
                     className={`w-14 h-14 rounded-lg border-2 cursor-pointer overflow-hidden ${
-                      mainImage === img
-                        ? "border-amber-400"
-                        : "border-gray-300"
+                      mainImage === img ? "border-amber-400" : "border-gray-300"
                     }`}
                     onClick={() => setMainImage(img)}
                   >
-                    <img
-                      src={img}
-                      alt={`color${idx + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={img} className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Size Selection */}
+            {/* SIZE SELECTION */}
             <div className="mb-6">
               <p className="text-[#9599A0] text-sm font-semibold mb-3">
                 Select Size: <span className="text-black">{selectedSize}</span>
@@ -124,74 +106,67 @@ export default function OrderNow() {
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-black mt-3 cursor-pointer">
-                View Size Chart
-              </p>
-            </div>
 
-            {/* Order Button */}
-            <NavLink
-              to="/checkout"
-              state={{ product }}
-              className="w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-6 rounded-lg transition mb-6"
-            >
-              Order Now
-            </NavLink>
+              {/* ORDER BUTTON */}
+              <button
+                onClick={handleOrderNow}
+                className="w-full bg-black hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
+              >
+                Order Now
+              </button>
 
-            {/* Share Section */}
-            <div className="flex items-center gap-4 pt-4 border-t border-gray-300">
-              <span className="text-black text-sm">Share :</span>
-              <button className="text-black transition">
-                <Facebook size={20} />
-              </button>
-              <button className="text-black transition">
-                <Twitter size={20} />
-              </button>
-              <button className="text-black transition">
-                <Linkedin size={20} />
-              </button>
+              {/* SOCIAL SHARE */}
+              <div className="flex items-center gap-4 p-2 pt-4 border-t border-gray-300">
+                <span className="text-[#737A87] text-sm">Share :</span>
+                <FaFacebookF /> <FaTwitter /> <FaLinkedinIn />
+              </div>
+              {/* size chart */}
+              <div className="mt-6">
+                <div className="flex gap-2 mb-2">
+                  <button className="bg-gray-200 px-3 py-1 text-sm rounded-md">NCh</button>
+                  <button className="bg-[#EFEFEF] px-3 py-1 text-sm rounded-md">Cm</button>
+                </div>
+              <img src={sizeChart} alt="Size Chart" />
+
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Description Section */}
-        <div className="rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-4 border-b-2 border-gray-300">
-            Description
-          </h2>
-
-          <p className="text-gray-700 text-base mb-6">
-            Our Luxury Twill Pant is the perfect choice for your everyday go-to,
-            offering unmatched comfort and style!
-          </p>
-
-          <ul className="space-y-3 text-gray-700">
-            <li className="flex gap-3">
-              <span className="font-semibold text-gray-900">
-                100% Cotton Twill
-              </span>
-              <span>(GSM 220-250) for comfort and durability</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-semibold text-gray-900">
-                Non-stitch design
-              </span>
-              <span>ideal for Salat and daily wear</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-semibold text-gray-900">Button closure</span>
-              <span>with premium stitching for a polished look</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-semibold text-gray-900">Added ribbon</span>
-              <span>for a customizable waist fit</span>
-            </li>
-            <li className="flex gap-3">
-              <span className="font-semibold text-gray-900">Versatile style</span>
-              <span>for prayer, walks, and casual wear</span>
-            </li>
-          </ul>
-        </div>
+        {/* YOU MAY ALSO LIKE */}
+        {sameTitleProducts.length > 0 && (
+          <div className="border-t border-gray-300 pt-12 mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">You may also like</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {sideImages.map((img, idx) => (
+                <div key={idx} className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg">
+                  <div className="relative flex justify-center items-center">
+                    <span className="absolute top-4 left-4 bg-[#FA4A69] text-white rounded-3xl px-3 py-1 font-bold">
+                      {clickedProduct.discount || "-15%"}
+                    </span>
+                    <img src={img} alt={clickedProduct.title} className="w-full h-auto object-cover" />
+                  </div>
+                  <div className="p-4 sm:p-6 flex flex-col flex-1">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900">{clickedProduct.title}</h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#0000004D] line-through text-sm sm:text-lg">${clickedProduct.oldPrice}</span>
+                        <span className="text-md sm:text-xl font-bold text-gray-900">${clickedProduct.price}</span>
+                      </div>
+                    </div>
+                    <p className="text-[#B3B3B3] text-xs sm:text-sm mb-4">{clickedProduct.stock}</p>
+                    <button
+                      onClick={() => setMainImage(img)}
+                      className="w-full bg-black  text-white text-xs sm:text-sm py-2 sm:py-3 rounded-md hover:bg-[#2A2828] transition mt-auto"
+                    >
+                      ORDER NOW
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

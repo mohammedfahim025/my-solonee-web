@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="bg-[#F6F6F6] border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Main Footer Content */}
-        <div className="flex flex-wrap justify-between gap-6">
+        <div className="flex flex-c flex-wrap justify-between gap-6">
           {/* Brand */}
           <div className="flex flex-col items-start">
             <img src={logo} alt="Logo" className="mb-2 w-28" />
@@ -104,7 +104,7 @@ export default function Footer() {
 
           {/* Address */}
           <h2 className="text-sm text-[#CDCDCD]">
-            455 West Orchard Street Kings Mountain, NC 28086
+            103/A Khulshi 4No Road, Chattogram, Bangladesh
           </h2>
 
           {/* Bottom license */}

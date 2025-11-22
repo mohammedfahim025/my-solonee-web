@@ -1,21 +1,21 @@
 import React from "react";
-
+import clothsVedio from "../../assets/Cloths-vedio.mp4"
 const Banner = () => {
   return (
-    <div className="relative w-full h-screen flex items-center justify-center bg-black">
-      {/* YouTube Video */}
-      <div className="absolute inset-0">
-        <iframe
-          className="w-full h-full"
-          src="https://www.youtube.com/embed/flFETfq__p4?autoplay=1&mute=1&controls=1"
-          title="YouTube video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+    <div className="relative  max-w-[97vw] mx-auto h-[823px] overflow-hidden  ">
+      {/* Local Video */}
+      <video
+        src={clothsVedio}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute top-0 left-0 w-full h-full rounded-2xl object-cover"
+      />
     </div>
   );
 };
 
 export default Banner;
+ 
+
