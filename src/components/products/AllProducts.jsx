@@ -11,7 +11,7 @@ import CarouselCard from "../carusel/CarouselCard";
 
 const AllProducts = () => {
   const products = [
-    { id: 1, title: "Pro t-shirt", category: "Coats & Jackets", oldPrice: 40, price: 35, stock: "Out of Stock", discount: "-15%", img: tshirt1 },
+    { id: 1, title: "The Mesa jacket", category: "Coats & Jackets", oldPrice: 40, price: 35, stock: "Out of Stock", discount: "-15%", img: tshirt1 },
     { id: 2, title: "basic t-shirt", category: "Coats & Jackets", oldPrice: 40, price: 40, stock: "In Stock", discount: "-15%", img: tshirt1 },
     { id: 3, title: "Pro t-shirt", category: "Coats & Jackets", oldPrice: 40, price: 55, stock: "In Stock", discount: "-15%", img: tshirt1 },
     { id: 4, title: "Pro t-shirt", category: "Coats & Jackets", oldPrice: 40, price: 70, stock: "Out of Stock", discount: "-15%", img: tshirt1 },
