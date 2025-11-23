@@ -15,7 +15,7 @@ const CarouselCard = () => {
       {/* ---------- LEFT TEXT SECTION ---------- */}
       <div className="flex flex-col justify-center items-center text-center w-full md:w-1/2 px-4">
         <h2 className="text-xl sm:text-2xl text-[#879590] mb-2">
-          Newsletter
+          
         </h2>
 
         <h1 className="text-3xl sm:text-5xl text-white font-bold leading-tight mb-6">
@@ -48,7 +48,7 @@ const CarouselCard = () => {
               "swiper-pagination-bullet-active bg-yellow-400 w-4 h-4",
           }}
         >
-          {[manImage, manImage2, manImage3].map((img, idx) => (
+          {[manImage, manImage2, manImage3, ].map((img, idx) => (
             <SwiperSlide key={idx}>
               <img
                 src={img}

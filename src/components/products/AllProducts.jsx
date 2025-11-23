@@ -2,7 +2,7 @@ import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-import tshirt1 from "../../assets/t-shirt1.png";
+import tshirt1 from "../../assets/card1.jpg";
 import tshirt2 from "../../assets/t-shirt2.png";
 import tshirt3 from "../../assets/t-shirt3.png";
 import tshirt4 from "../../assets/t-shirt4.png";

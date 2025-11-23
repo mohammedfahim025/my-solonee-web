@@ -28,7 +28,7 @@ export default function Footer() {
               </ul>
               {/* Policies */}
               <ul className="space-y-1">
-                <li><a href="#" className="text-black text-xs hover:text-gray-900">Terms Policies</a></li>
+                <li><a href="#" className="text-black text-xs hover:text-gray-900">Terms</a></li>
                 <li><a href="#" className="text-black text-xs hover:text-gray-900">Shipping Policy</a></li>
                 <li><a href="#" className="text-black text-xs hover:text-gray-900">Refund Policy</a></li>
               </ul>
