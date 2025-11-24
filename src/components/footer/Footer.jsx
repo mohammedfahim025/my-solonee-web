@@ -37,7 +37,7 @@ export default function Footer() {
             {/* Social */}
             <div>
               <h3 className="text-sm font-semibold text-gray-700 mb-1">Follow Us</h3>
-              <div className="space-y-1">
+              <div className="space-y-1 ">
                 <a href="#" className="flex items-center gap-2 text-black hover:text-amber-600 text-xs">
                   <Instagram size={18}/> Instagram
                 </a>
@@ -75,17 +75,17 @@ export default function Footer() {
             </ul>
 
             {/* Social */}
-            <div className="text-center">
-              <h3 className="text-sm font-semibold text-gray-700 mb-1">Follow Us</h3>
-              <div className="space-y-1">
+            <div className="text-center p-3 ">
+              {/* <h3 className="text-sm font-semibold text-gray-700 mb-1">Follow Us</h3> */}
+              <div className="space-x-3 flex">
                 <a href="#" className="flex items-center justify-center gap-2 text-black hover:text-amber-600 text-xs">
-                  <Instagram size={18}/> Instagram
+                  <Instagram size={18}/> 
                 </a>
                 <a href="#" className="flex items-center justify-center gap-2 text-black hover:text-amber-600 text-xs">
-                  <Facebook size={18}/> Facebook
+                  <Facebook size={18}/> 
                 </a>
                 <a href="#" className="flex items-center justify-center gap-2 text-black hover:text-amber-600 text-xs">
-                  <Twitter size={18}/> Twitter
+                  <Twitter size={18}/> 
                 </a>
               </div>
             </div>

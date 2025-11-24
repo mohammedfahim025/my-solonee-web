@@ -211,12 +211,12 @@ const AllProducts = () => {
   return (
     <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* CATEGORY BUTTONS */}
-      <div className="flex flex-wrap justify-center lg:justify-center sm:justify-start gap-3 mt-10 relative z-10">
+      <div className="flex flex-wrap justify-center lg:justify-center sm:justify-start gap-2 mt-10 relative z-10">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`text-sm sm:text-base px-4 py-2 rounded-sm font-semibold transition ${
+            className={`text-sm sm:text-base px-3 py-2 rounded-sm font-semibold transition ${
               selectedCategory === cat
                 ? "bg-[#CDAB63] text-white"
                 : "bg-[#F4F4F4] text-black hover:bg-[#CDAB63] hover:text-white"
