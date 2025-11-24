@@ -4,6 +4,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
+import oatmeal from "../../assets/oatmeal-knit.jpg"
 import manImage from "../../assets/Base (1).png";
 import manImage2 from "../../assets/Base (1).png";
 import manImage3 from "../../assets/Base (1).png";
@@ -48,7 +49,7 @@ const CarouselCard = () => {
               "swiper-pagination-bullet-active bg-yellow-400 w-4 h-4",
           }}
         >
-          {[manImage, manImage2, manImage3, ].map((img, idx) => (
+          {[oatmeal, manImage, manImage2, manImage3, ].map((img, idx) => (
             <SwiperSlide key={idx}>
               <img
                 src={img}
@@ -57,6 +58,14 @@ const CarouselCard = () => {
               />
             </SwiperSlide>
           ))}
+
+
+                             
+                                           
+
+                                                     
+                                                      
+                                                      
         </Swiper>
       </div>
 
