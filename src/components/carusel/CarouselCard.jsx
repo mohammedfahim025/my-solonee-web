@@ -5,8 +5,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import oatmeal from "../../assets/oatmeal-knit.jpg"
-import oatmeals from "../../assets/oatmeal-knit.jpg"
-import manImage from "../../assets/Base (1).png";
+import oatmeals from "../../assets/carusel4.png"
+import demo from "../../assets/carusel2.png"
+import demo2 from "../../assets/carusel3.png"
 
 const CarouselCard = () => {
   return (
@@ -48,7 +49,7 @@ const CarouselCard = () => {
               "swiper-pagination-bullet-active bg-yellow-400 w-4 h-4",
           }}
         >
-          {[oatmeal, oatmeals, manImage,  ].map((img, idx) => (
+          {[oatmeal, oatmeals, demo, demo2 ].map((img, idx) => (
             <SwiperSlide key={idx}>
               <img
                 src={img}

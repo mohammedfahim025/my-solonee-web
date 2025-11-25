@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
-import sizeChart from "../assets/size chart.png"
+import sizeChart from "../assets/size chart.png";
 
 export default function OrderNow() {
   const location = useLocation();
   const navigate = useNavigate();
-  
   const { clickedProduct, allProducts } = location.state;
 
   const [mainImage, setMainImage] = useState(clickedProduct.img);
@@ -20,24 +19,22 @@ export default function OrderNow() {
     { label: "XXL", available: false },
   ];
 
-  // Only same title products excluding clicked product
-  const sameTitleProducts = allProducts
-    .filter(p => p.title === clickedProduct.title && p.id !== clickedProduct.id)
-    .slice(0, 3); // only 3 variations
-
-  // For left images: main image + 3 variations
-  const sideImages = [clickedProduct.img, ...sameTitleProducts.map(p => p.img)];
+  // Use clicked product child images if available
+  const sideImages = [clickedProduct.img, ...(clickedProduct.child || [])];
 
   const handleOrderNow = () => {
     navigate("/checkout", {
-      state: { product: clickedProduct, size: selectedSize, image: mainImage },
+      state: {
+        product: clickedProduct,
+        size: selectedSize,
+        image: mainImage, // pass selected image
+      },
     });
   };
 
   return (
     <div className="bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* MAIN SECTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {/* LEFT IMAGE */}
           <div className="flex gap-4">
@@ -56,15 +53,23 @@ export default function OrderNow() {
             </div>
 
             <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-              <img src={mainImage} className="w-full h-full object-cover" alt="main-product" />
+              <img
+                src={mainImage}
+                className="w-full h-full object-cover"
+                alt="main-product"
+              />
             </div>
           </div>
 
           {/* RIGHT DETAILS */}
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-[#101828] mb-4">{clickedProduct.title}</h1>
+            <h1 className="text-3xl font-bold text-[#101828] mb-4">
+              {clickedProduct.title}
+            </h1>
             <div className="mb-6">
-              <span className="text-2xl font-bold text-[#101828]">৳ {clickedProduct.price.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-[#101828]">
+                ৳ {clickedProduct.price.toFixed(2)}
+              </span>
             </div>
 
             {/* COLOR SELECTION */}
@@ -107,7 +112,6 @@ export default function OrderNow() {
                 ))}
               </div>
 
-              {/* ORDER BUTTON */}
               <button
                 onClick={handleOrderNow}
                 className="w-full bg-black hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
@@ -120,44 +124,65 @@ export default function OrderNow() {
                 <span className="text-[#737A87] text-sm">Share :</span>
                 <FaFacebookF /> <FaTwitter /> <FaLinkedinIn />
               </div>
-              {/* size chart */}
+
+              {/* SIZE CHART */}
               <div className="mt-6">
                 <div className="flex gap-2 mb-2">
-                  <button className="bg-gray-200 px-3 py-1 text-sm rounded-md">NCh</button>
-                  <button className="bg-[#EFEFEF] px-3 py-1 text-sm rounded-md">Cm</button>
+                  <button className="bg-gray-200 px-3 py-1 text-sm rounded-md">
+                    NCh
+                  </button>
+                  <button className="bg-[#EFEFEF] px-3 py-1 text-sm rounded-md">
+                    Cm
+                  </button>
                 </div>
-              <img src={sizeChart} alt="Size Chart" />
-
+                <img src={sizeChart} alt="Size Chart" />
               </div>
             </div>
           </div>
         </div>
 
         {/* YOU MAY ALSO LIKE */}
-        {sameTitleProducts.length > 0 && (
+        {sideImages.length > 1 && (
           <div className="border-t border-gray-300 pt-12 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">You may also like</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">
+              You may also like
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {sideImages.map((img, idx) => (
-                <div key={idx} className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg">
+                <div
+                  key={idx}
+                  className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg"
+                >
                   <div className="relative flex justify-center items-center">
                     <span className="absolute top-4 left-4 bg-[#FA4A69] text-white rounded-3xl px-3 py-1 font-bold">
                       {clickedProduct.discount || "-15%"}
                     </span>
-                    <img src={img} alt={clickedProduct.title} className="w-full h-auto object-cover" />
+                    <img
+                      src={img}
+                      alt={clickedProduct.title}
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                   <div className="p-4 sm:p-6 flex flex-col flex-1">
                     <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-900">{clickedProduct.title}</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900">
+                        {clickedProduct.title}
+                      </h3>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#0000004D] line-through text-sm sm:text-lg">${clickedProduct.oldPrice}</span>
-                        <span className="text-md sm:text-xl font-bold text-gray-900">${clickedProduct.price}</span>
+                        <span className="text-[#0000004D] line-through text-sm sm:text-lg">
+                          ${clickedProduct.oldPrice}
+                        </span>
+                        <span className="text-md sm:text-xl font-bold text-gray-900">
+                          ${clickedProduct.price}
+                        </span>
                       </div>
                     </div>
-                    <p className="text-[#B3B3B3] text-xs sm:text-sm mb-4">{clickedProduct.stock}</p>
+                    <p className="text-[#B3B3B3] text-xs sm:text-sm mb-4">
+                      {clickedProduct.stock}
+                    </p>
                     <button
                       onClick={() => setMainImage(img)}
-                      className="w-full bg-black  text-white text-xs sm:text-sm py-2 sm:py-3 rounded-md hover:bg-[#2A2828] transition mt-auto"
+                      className="w-full bg-black text-white text-xs sm:text-sm py-2 sm:py-3 rounded-md hover:bg-[#2A2828] transition mt-auto"
                     >
                       ORDER NOW
                     </button>
