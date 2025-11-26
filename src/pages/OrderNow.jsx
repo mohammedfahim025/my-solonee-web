@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import sizeChart from "../assets/cloth-size.png";
-
+import { FaInstagram } from "react-icons/fa";
 
 export default function OrderNow() {
   const location = useLocation();
@@ -120,10 +120,12 @@ export default function OrderNow() {
                 Order Now
               </button>
 
+
               {/* SOCIAL SHARE */}
               <div className="flex items-center gap-4 p-2 pt-4 border-t border-gray-300">
                 <span className="text-[#737A87] text-sm">Share :</span>
-                <FaFacebookF /> <FaTwitter /> 
+               <a href="https://www.facebook.com/share/1ACcxe3Xs2/" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+               <a href="https://www.instagram.com/solonee.cloth/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a> 
               </div>
 
               {/* SIZE CHART */}
