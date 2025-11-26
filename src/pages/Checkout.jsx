@@ -3,14 +3,20 @@ import { useLocation } from "react-router";
 import BkashLogo from "../assets/BKash_Logo_icon-700x662 1.png";
 import { NavLink } from "react-router";
 import { ChevronDown } from "lucide-react";
+import { bdLocations } from "../data/bdLocations";
 
 export default function Checkout() {
   const location = useLocation();
   const product = location.state?.product;
-  const selectedImage = location.state?.image; // image from OrderNow
-  const selectedSize = location.state?.size;   // size from OrderNow
+  const selectedImage = location.state?.image;
+  const selectedSize = location.state?.size;
+
   const [quantity, setQuantity] = useState(1);
   const [transactionId, setTransactionId] = useState("1154 4444 44");
+
+  // ★ ADD Dynamic District + Thana States
+  const [district, setDistrict] = useState("");
+  const [thana, setThana] = useState("");
 
   if (!product) {
     return (
@@ -35,7 +41,7 @@ export default function Checkout() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         {/* LEFT SIDE */}
-       <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+        <div className="lg:col-span-2 space-y-6 sm:space-y-8">
           <div className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 w-full shadow">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8">
               Billing And Shipping
@@ -44,7 +50,7 @@ export default function Checkout() {
             {/* Name */}
             <div className="mb-4 sm:mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
-                Name <span className="text-black-500">:</span>
+                Name :
               </label>
               <input
                 type="text"
@@ -56,7 +62,7 @@ export default function Checkout() {
             {/* Phone */}
             <div className="mb-4 sm:mb-6">
               <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
-                Phone Number <span className="text-black-500">:</span>
+                Phone Number :
               </label>
               <input
                 type="tel"
@@ -67,46 +73,55 @@ export default function Checkout() {
 
             {/* District & Thana */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 sm:mb-6">
+              {/* District */}
               <div>
                 <label className="block text-sm font-medium mb-1 sm:mb-2">
-                  District <span className="text-black-500">:</span>
+                  District :
                 </label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-[#F7F7F7] appearance-none">
-                    <option>District</option>
-                    <option>Dhaka</option>
-                    <option>Chattogram</option>
-                    <option>Khulna</option>
-                    <option>Barisal</option>
-                    <option>Sylhet</option>
-                    <option>Rajshahi</option>
-                    <option>Rangpur</option>
-                    <option>Mymensingh</option>
-                    <option>Comilla</option>
-                    <option>Cox's Bazar</option>
+                  <select
+                    value={district}
+                    onChange={(e) => {
+                      setDistrict(e.target.value);
+                      setThana(""); // reset thana
+                    }}
+                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-[#F7F7F7] appearance-none"
+                  >
+                    <option value="">Select District</option>
+
+                    {Object.keys(bdLocations).map((dist) => (
+                      <option key={dist} value={dist}>
+                        {dist}
+                      </option>
+                    ))}
                   </select>
+
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 pointer-events-none" />
                 </div>
               </div>
 
+              {/* Thana */}
               <div>
                 <label className="block text-sm font-medium mb-1 sm:mb-2">
-                  Thana <span className="text-black-500">:</span>
+                  Thana :
                 </label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-[#F7F7F7] appearance-none">
-                    <option>Thana / Area</option>
-                    <option>Gulshan</option>
-                    <option>Banani</option>
-                    <option>Uttara</option>
-                    <option>Mirpur</option>
-                    <option>Dhanmondi</option>
-                    <option>Motijheel</option>
-                    <option>Farmgate</option>
-                    <option>Mohammadpur</option>
-                    <option>Baridhara</option>
-                    <option>Shamoli</option>
+                  <select
+                    value={thana}
+                    onChange={(e) => setThana(e.target.value)}
+                    disabled={!district}
+                    className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg bg-[#F7F7F7] appearance-none"
+                  >
+                    <option value="">Select Thana / Area</option>
+
+                    {district &&
+                      bdLocations[district].map((area) => (
+                        <option key={area} value={area}>
+                          {area}
+                        </option>
+                      ))}
                   </select>
+
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 pointer-events-none" />
                 </div>
               </div>
@@ -115,7 +130,7 @@ export default function Checkout() {
             {/* Full Address */}
             <div className="mb-4 sm:mb-8">
               <label className="block text-sm font-medium mb-1 sm:mb-2">
-                Full Address <span className="text-red-500">:</span>
+                Full Address :
               </label>
               <input
                 type="text"
@@ -137,9 +152,7 @@ export default function Checkout() {
               </li>
               <li className="flex items-start">
                 <span className="mr-2 sm:mr-3 text-base">•</span>
-                <span>
-                  Delivery charges: ৳150 .
-                </span>
+                <span>Delivery charges: ৳150.</span>
               </li>
               <li className="flex items-start">
                 <span className="mr-2 sm:mr-3 text-base">•</span>
@@ -156,17 +169,19 @@ export default function Checkout() {
               Product Details
             </h2>
 
-            {/* Product Item */}
+            {/* Product Card */}
             <div className="flex gap-4 mb-4 pb-4 border-b border-gray-200">
               <img
-                src={selectedImage || product.img} // ✅ Show selected image
+                src={selectedImage || product.img}
                 alt={product.title}
                 className="w-20 h-20 rounded-lg object-cover"
               />
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">{product.title}</h3>
+                <h3 className="font-semibold text-gray-900">
+                  {product.title}
+                </h3>
                 <p className="text-sm text-gray-500">
-                  Size: {selectedSize || "S"} {/* ✅ Show selected size */}
+                  Size: {selectedSize || "S"}
                 </p>
                 <p className="font-bold text-gray-900 mt-2">
                   BDT {product.price}
@@ -174,7 +189,7 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* Quantity Selector */}
+            {/* Quantity */}
             <div className="flex items-center gap-3">
               <button
                 onClick={decrement}
@@ -206,9 +221,10 @@ export default function Checkout() {
                 <span>BDT {total}</span>
               </div>
             </div>
-   {/* PAYMENT SECTION */}
+
+            {/* Payment Section */}
             <div className="bg-white border border-gray-300 rounded-lg p-4 space-y-4">
-              {/* 🔹 Bkash */}
+              {/* Bkash */}
               <div className="border border-gray-300 rounded-lg p-4 space-y-4">
                 <div className="flex justify-between bg-[#F4F4F4] border border-gray-200 gap-3 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
@@ -220,16 +236,10 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <ul className="flex justify-between text-sm">
-                  {/* <li>Shipping Charge</li> */}
-                  {/* <li>BDT 0.00</li> */}
-                </ul>
-
                 <div className="flex justify-between items-center text-sm text-gray-600">
                   <span>Transaction Id</span>
                   <input
                     type="text"
-                    
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
                     className="w-36 text-center border border-gray-300 rounded px-2 py-1"
