@@ -20,10 +20,10 @@ const AllProducts = () => {
   const products = [
     { id: 1, title: "The Mesa Jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
     { id: 2, title: "CH-Hoodie", category: "Hoodie", oldPrice: 40, price: 3000, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
-    { id: 3, title: "The Mocha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
-    { id: 4, title: "Knit Jumper", category: "Coats & Jackets", oldPrice: 40, price: 3000, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
-    { id: 5, title: "The Classic Bomber", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
-    { id: 6, title: "The Black Jacket", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
+    { id: 3, title: "The Mocha Chore", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
+    { id: 4, title: "Knit Jumper", category: "Sweaters", oldPrice: 40, price: 3000, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
+    { id: 5, title: "The Classic Bomber", category: "Sweaters", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
+    { id: 6, title: "The Black Jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
   ];
 
   const categories = ["All", "Coats & Jackets", "Hoodie", "Sweaters"];

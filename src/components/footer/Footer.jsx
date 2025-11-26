@@ -36,17 +36,17 @@ export default function Footer() {
 
             {/* Social */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-1">Follow Us</h3>
-              <div className="space-y-1 ">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Follow Us</h3>
+              <div className="space-y-2  ">
                 <a href="https://www.instagram.com/solonee.clo?igsh=N2Fid3MwdW5jOXgw" className="flex items-center gap-2 text-black hover:text-amber-600 text-xs">
                   <Instagram size={18}/> Instagram
                 </a>
                 <a href="https://www.facebook.com/share/1ACcxe3Xs2/" className="flex items-center gap-2 text-black hover:text-amber-600 text-xs">
                   <Facebook size={18}/> Facebook
                 </a>
-                <a href="#" className="flex items-center gap-2 text-black hover:text-amber-600 text-xs">
+                {/* <a href="#" className="flex items-center gap-2 text-black hover:text-amber-600 text-xs">
                   <Twitter size={18}/> Twitter
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

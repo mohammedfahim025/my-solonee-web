@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
-import sizeChart from "../assets/size chart.png";
+import sizeChart from "../assets/cloth-size.png";
 
 
 export default function OrderNow() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { clickedProduct, allProducts } = location.state;
+  const { clickedProduct } = location.state;
 
   const [mainImage, setMainImage] = useState(clickedProduct.img);
   const [selectedSize, setSelectedSize] = useState("S");
@@ -136,7 +136,7 @@ export default function OrderNow() {
                     Cm
                   </button>
                 </div>
-                <img src={sizeChart} alt="Size Chart" />
+                <img width={250} height={200} src={sizeChart} alt="Size Chart" />
               </div>
             </div>
           </div>
@@ -170,11 +170,11 @@ export default function OrderNow() {
                         {clickedProduct.title}
                       </h3>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#0000004D] line-through text-sm sm:text-lg">
+                        {/* <span className="text-[#0000004D] line-through text-sm sm:text-lg">
                           ${clickedProduct.oldPrice}
-                        </span>
+                        </span> */}
                         <span className="text-md sm:text-xl font-bold text-gray-900">
-                          ${clickedProduct.price}
+                          ৳{clickedProduct.price}
                         </span>
                       </div>
                     </div>
