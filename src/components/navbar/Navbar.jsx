@@ -15,8 +15,6 @@ import blackjack from "../../assets/black-jack.png";
 import heavyChild from "../../assets/hevaby-weight-child.jpg";
 import machaChild from "../../assets/black-jack.png";
 
-import CarouselCard from "../carusel/CarouselCard";
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
@@ -24,16 +22,17 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  //AllProducts data exactly same as in AllProducts component
+  // All Products
   const products = [
-  { id: 1, title: "The Mesa jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
-     { id: 2, title: "The Heavy weight", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
-     { id: 3, title: "The Macha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
-     { id: 4, title: "The Oatmeal Knit", category: "Coats & Jackets", oldPrice: 40, price: 3500, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
-     { id: 5, title: "The Classic Bomber", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
-     { id: 6, title: "The Machoa Chore", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
+    { id: 1, title: "The Mesa jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
+    { id: 2, title: "CH-Hoodie", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
+    { id: 3, title: "The Mocha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
+    { id: 4, title: "Knit Jumper", category: "Coats & Jackets", oldPrice: 40, price: 3500, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
+    { id: 5, title: "The Classic Bomber", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
+    { id: 6, title: "The Black Jacket", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
   ];
 
+  // ⭐ IMPROVED SMART SEARCH ⭐
   const handleSearch = (e) => {
     const text = e.target.value.toLowerCase();
     setSearchText(e.target.value);
@@ -43,12 +42,27 @@ const Navbar = () => {
       return;
     }
 
-    const result = products.filter((item) =>
-      item.title.toLowerCase().includes(text)
-    );
+    const result = products.filter((item) => {
+      const title = item.title.toLowerCase();
+      const category = item.category.toLowerCase();
+
+      // 👉 1) First letter strict matching
+      if (title.startsWith(text) || category.startsWith(text)) {
+        return true;
+      }
+
+      // 👉 2) If length > 1 → flexible search (includes)
+      if (text.length > 1) {
+        return title.includes(text) || category.includes(text);
+      }
+
+      return false;
+    });
+
     setFiltered(result);
   };
 
+  // Select product
   const handleSelect = (product) => {
     navigate(`/product-details/${product.id}`, {
       state: { clickedProduct: product, allProducts: products },
@@ -61,11 +75,11 @@ const Navbar = () => {
   return (
     <div className="p-4 w-full py-4">
       <div className="flex bg-[#F6F6F6] justify-between items-center px-6 md:px-20 py-6 rounded-2xl">
+        
         {/* Logo */}
         <Link to="/">
           <img src={logo} alt="logo" className="h-10 cursor-pointer" />
         </Link>
-        
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-10 font-medium">
@@ -93,34 +107,24 @@ const Navbar = () => {
 
           {/* Search Dropdown */}
           {filtered.length > 0 && (
-            <div className="absolute top-full mt-2 w-full bg-white shadow-2xl rounded-xl  overflow-hidden z-50">
+            <div className="absolute top-full mt-2 w-full bg-white shadow-2xl rounded-xl overflow-hidden z-50">
               {filtered.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => handleSelect(item)}
-                  className="flex items-center gap-4 p-4 hover:bg-gray-200 cursor-pointer  last:border-0transition"
+                  className="flex items-center gap-4 p-4 hover:bg-gray-200 cursor-pointer transition"
                 >
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="w-14 h-14 object-cover rounded-lg border border-gray-300"
+                    className="w-14 h-14 object-cover rounded-lg border"
                   />
                   <div className="flex-1">
-                    <p className="font-semibold text-gray-800">{item.title}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-amber-600 font-bold">
-                        ৳{item.price}
-                      </span>
-                      {/* {item.oldPrice > item.price && (
-                        // <span className="text-xs text-gray-500 line-through">
-                        //   ৳{item.oldPrice}
-                        // </span>
-                      )} */}
-                    </div>
+                    <p className="font-semibold text-gray-800">
+                      {item.title}
+                    </p>
+                    <p className="text-amber-600 font-bold">৳{item.price}</p>
                   </div>
-                  {/* <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full">
-                    {item.discount}
-                  </span> */}
                 </div>
               ))}
             </div>
@@ -150,6 +154,7 @@ const Navbar = () => {
             onChange={handleSearch}
             className="w-full px-5 py-4 rounded-xl border border-gray-400 focus:outline-none"
           />
+
           {filtered.length > 0 && (
             <div className="mt-2 bg-white shadow-2xl rounded-xl overflow-hidden">
               {filtered.map((item) => (
@@ -160,7 +165,6 @@ const Navbar = () => {
                 >
                   <img
                     src={item.img}
-                    alt=""
                     className="w-16 h-16 rounded-lg object-cover border"
                   />
                   <div>

@@ -155,9 +155,9 @@ export default function OrderNow() {
                   className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg"
                 >
                   <div className="relative flex justify-center items-center">
-                    <span className="absolute top-4 left-4 bg-[#FA4A69] text-white rounded-3xl px-3 py-1 font-bold">
+                    {/* <span className="absolute top-4 left-4 bg-[#FA4A69] text-white rounded-3xl px-3 py-1 font-bold">
                       {clickedProduct.discount || "-15%"}
-                    </span>
+                    </span> */}
                     <img
                       src={img}
                       alt={clickedProduct.title}
