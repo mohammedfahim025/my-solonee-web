@@ -4,10 +4,18 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiSearch, FiMenu } from "react-icons/fi";
 
 //AllProducts image
-import tshirt1 from "../../assets/t-shirt1.png";
-import tshirt2 from "../../assets/t-shirt2.png";
-import tshirt3 from "../../assets/t-shirt3.png";
-import tshirt4 from "../../assets/t-shirt4.png";
+import mesaJacket from "../../assets/mesa-jacket.jpg";
+import heavyJacket from "../../assets/the-heavyweight-fleeece.jpg";
+import machajacket from "../../assets/the-macha-chore.jpg";
+import oatmeal from "../../assets/the-oatmeal-knit.jpg";
+import classic from "../../assets/white-bomber.jpg";
+import blackjack from "../../assets/black-jack.png";
+
+// child images
+import heavyChild from "../../assets/hevaby-weight-child.jpg";
+import machaChild from "../../assets/black-jack.png";
+
+import CarouselCard from "../carusel/CarouselCard";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,126 +26,12 @@ const Navbar = () => {
 
   //AllProducts data exactly same as in AllProducts component
   const products = [
-    {
-      id: 1,
-      title: "Pro t-shirt",
-      category: "Coats & Jackets",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt1,
-    },
-    {
-      id: 2,
-      title: "basic t-shirt",
-      category: "Coats & Jackets",
-      oldPrice: 40,
-      price: 40,
-      stock: "In Stock",
-      discount: "-15%",
-      img: tshirt1,
-    },
-    {
-      id: 3,
-      title: "Pro t-shirt",
-      category: "Coats & Jackets",
-      oldPrice: 40,
-      price: 55,
-      stock: "In Stock",
-      discount: "-15%",
-      img: tshirt1,
-    },
-    {
-      id: 4,
-      title: "Pro t-shirt",
-      category: "Coats & Jackets",
-      oldPrice: 40,
-      price: 70,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt1,
-    },
-    {
-      id: 5,
-      title: "Hoodie t-shirt",
-      category: "Hoodie",
-      oldPrice: 40,
-      price: 95,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt2,
-    },
-    {
-      id: 6,
-      title: "Cool t-shirt",
-      category: "Sweaters",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt2,
-    },
-    {
-      id: 7,
-      title: "Basic t-shirt",
-      category: "Hoodie",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt2,
-    },
-    {
-      id: 8,
-      title: "Basic t-shirt",
-      category: "Hoodie",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt2,
-    },
-    {
-      id: 9,
-      title: "Basic t-shirt",
-      category: "Sweaters",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt4,
-    },
-    {
-      id: 10,
-      title: "Basic t-shirt",
-      category: "Sweaters",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt4,
-    },
-    {
-      id: 11,
-      title: "Basic t-shirt",
-      category: "Sweaters",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt4,
-    },
-    {
-      id: 12,
-      title: "Basic t-shirt",
-      category: "Sweaters",
-      oldPrice: 40,
-      price: 35,
-      stock: "Out of Stock",
-      discount: "-15%",
-      img: tshirt4,
-    },
+  { id: 1, title: "The Mesa jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
+     { id: 2, title: "The Heavy weight", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
+     { id: 3, title: "The Macha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
+     { id: 4, title: "The Oatmeal Knit", category: "Coats & Jackets", oldPrice: 40, price: 3500, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
+     { id: 5, title: "The Classic Bomber", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
+     { id: 6, title: "The Machoa Chore", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
   ];
 
   const handleSearch = (e) => {
@@ -217,16 +111,16 @@ const Navbar = () => {
                       <span className="text-amber-600 font-bold">
                         ৳{item.price}
                       </span>
-                      {item.oldPrice > item.price && (
-                        <span className="text-xs text-gray-500 line-through">
-                          ৳{item.oldPrice}
-                        </span>
-                      )}
+                      {/* {item.oldPrice > item.price && (
+                        // <span className="text-xs text-gray-500 line-through">
+                        //   ৳{item.oldPrice}
+                        // </span>
+                      )} */}
                     </div>
                   </div>
-                  <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full">
+                  {/* <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full">
                     {item.discount}
-                  </span>
+                  </span> */}
                 </div>
               ))}
             </div>

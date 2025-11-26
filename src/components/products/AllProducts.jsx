@@ -11,19 +11,19 @@ import classic from "../../assets/white-bomber.jpg";
 import blackjack from "../../assets/black-jack.png";
 
 // child images
-import heavyChild from "../../assets/hevaby-weight-child.jpg";
+import heavyChild from "../../assets/CH-HODDIE.jpg";
 import machaChild from "../../assets/black-jack.png";
 
 import CarouselCard from "../carusel/CarouselCard";
 
 const AllProducts = () => {
   const products = [
-    { id: 1, title: "The Mesa jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
-    { id: 2, title: "The Heavy weight", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
-    { id: 3, title: "The Macha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
-    { id: 4, title: "The Oatmeal Knit", category: "Coats & Jackets", oldPrice: 40, price: 3500, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
+    { id: 1, title: "The Mesa Jacket", category: "Coats & Jackets", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: mesaJacket, child: [] },
+    { id: 2, title: "CH-Hoodie", category: "Hoodie", oldPrice: 40, price: 3000, stock: "In Stock", discount: "-15%", img: heavyJacket, child: [heavyChild] },
+    { id: 3, title: "The Mocha Chore", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: machajacket, child: [machaChild] },
+    { id: 4, title: "Knit Jumper", category: "Coats & Jackets", oldPrice: 40, price: 3000, stock: "In Stock", discount: "-15%", img: oatmeal, child: [] },
     { id: 5, title: "The Classic Bomber", category: "Hoodie", oldPrice: 40, price: 4500, stock: "In Stock", discount: "-15%", img: classic, child: [] },
-    { id: 6, title: "The Machoa Chore", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
+    { id: 6, title: "The Black Jacket", category: "Sweaters", oldPrice: 40, price: 4500, stock: "Out of Stock", discount: "-15%", img: blackjack, child: [] },
   ];
 
   const categories = ["All", "Coats & Jackets", "Hoodie", "Sweaters"];

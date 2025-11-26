@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import sizeChart from "../assets/size chart.png";
 
+
 export default function OrderNow() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ export default function OrderNow() {
               {/* SOCIAL SHARE */}
               <div className="flex items-center gap-4 p-2 pt-4 border-t border-gray-300">
                 <span className="text-[#737A87] text-sm">Share :</span>
-                <FaFacebookF /> <FaTwitter /> <FaLinkedinIn />
+                <FaFacebookF /> <FaTwitter /> 
               </div>
 
               {/* SIZE CHART */}

@@ -4,7 +4,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import oatmeal from "../../assets/oatmeal-knit.jpg"
+import oatmeal from "../../assets/Untitled-2.png"
 import oatmeals from "../../assets/carusel4.png"
 import demo from "../../assets/carusel2.png"
 import demo2 from "../../assets/carusel3.png"
@@ -26,7 +26,7 @@ const CarouselCard = () => {
         {/* Contact & Email */}
         <div className="flex flex-col gap-2 text-white text-sm sm:text-base">
           <span className="font-medium">
-            Contact: <span className="font-normal">018 00 005255</span>
+            Contact: <span className="font-normal">0187112274</span>
           </span>
           <span className="font-medium">
             Email: <span className="font-normal">fashion@solonee.com</span>
