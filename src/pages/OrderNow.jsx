@@ -113,12 +113,13 @@ export default function OrderNow() {
                 ))}
               </div>
 
-              <button
-                onClick={handleOrderNow}
-                className="w-[280px] bg-black mb-4 hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
-              >
-                Order Now
-              </button>
+           <button
+  onClick={handleOrderNow}
+  className="w-full md:w-[280px] bg-black mb-4 hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
+>
+  Order Now
+</button>
+
 
 
               {/* SOCIAL SHARE */}
