@@ -92,11 +92,11 @@ export default function OrderNow() {
             </div>
 
             {/* SIZE SELECTION */}
-            <div className="mb-6">
+            <div className="mb-6 ">
               <p className="text-[#9599A0] text-sm font-semibold mb-3">
                 Select Size: <span className="text-black">{selectedSize}</span>
               </p>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2  flex-wrap">
                 {sizes.map((size) => (
                   <button
                     key={size.label}
@@ -115,7 +115,7 @@ export default function OrderNow() {
 
               <button
                 onClick={handleOrderNow}
-                className="w-full bg-black hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
+                className="w-[280px] bg-black mb-4 hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
               >
                 Order Now
               </button>
@@ -125,7 +125,7 @@ export default function OrderNow() {
               <div className="flex items-center gap-4 p-2 pt-4 border-t border-gray-300">
                 <span className="text-[#737A87] text-sm">Share :</span>
                <a href="https://www.facebook.com/share/1ACcxe3Xs2/" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
-               <a href="https://www.instagram.com/solonee.cloth/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a> 
+               <a href="https://www.instagram.com/solonee.cloth/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>  
               </div>
 
               {/* SIZE CHART */}
