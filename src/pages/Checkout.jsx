@@ -343,7 +343,11 @@ export default function Checkout() {
                         Delivery Charge Notice
                       </p>
                       <ul className="text-xs text-yellow-800 space-y-1">
-                        <li>• ৳150 All District</li>
+                        <li>• ৳ 150 All District</li>
+                        
+                      
+                          <li> • 150 taka Shipping Charge must be paid before delivery.</li>
+                        
                       </ul>
                     </div>
                   </div>
