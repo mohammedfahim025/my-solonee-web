@@ -5,9 +5,12 @@ import { NavLink } from "react-router";
 import { ChevronDown } from "lucide-react";
 import { bdLocations } from "../data/bdLocations";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const product = location.state?.product;
   const selectedImage = location.state?.image;
   const selectedSize = location.state?.size;
@@ -47,7 +50,7 @@ export default function Checkout() {
     formData.append("quantity", quantity);
     formData.append("subtotal", subtotal);
     formData.append("total", total);
-    formData.append("selectedSize", selectedSize);  
+    formData.append("selectedSize", selectedSize);
 
     console.log(
       formData.forEach((value, key) => console.log(key, value)),
@@ -56,7 +59,14 @@ export default function Checkout() {
 
     try {
       // send formdata to server
-      if(!district || !thana || !quantity || !subtotal || !total || !selectedSize){
+      if (
+        !district ||
+        !thana ||
+        !quantity ||
+        !subtotal ||
+        !total ||
+        !selectedSize
+      ) {
         toast.error("Please select district and thana");
         return;
       }
@@ -73,14 +83,17 @@ export default function Checkout() {
       // parse response as json
       const data = await response.json();
       // close loading toast
-      if(!data.result){
+      if (!data.result) {
         toast.error("Order submission failed!");
         return;
       }
       toast.success("Order submitted successfully!", {
         id: loadingToast,
       });
-
+      setTimeout(() => {
+        navigate("/");
+        //   redirect to home
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -118,24 +131,23 @@ export default function Checkout() {
             </div>
 
             {/* Phone */}
-           {/* Phone */}
-<div className="mb-4 sm:mb-6">
-  <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
-    Phone Number :
-  </label>
-  <input
-    type="text"
-    name="phone"
-    required
-    maxLength={11}
-    placeholder="Phone Number"
-    onInput={(e) => {
-      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Only number
-    }}
-    className="w-full px-4 py-3 border bg-[#F7F7F7] border-gray-300 rounded-lg"
-  />
-</div>
-
+            {/* Phone */}
+            <div className="mb-4 sm:mb-6">
+              <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
+                Phone Number :
+              </label>
+              <input
+                type="text"
+                name="phone"
+                required
+                maxLength={11}
+                placeholder="Phone Number"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Only number
+                }}
+                className="w-full px-4 py-3 border bg-[#F7F7F7] border-gray-300 rounded-lg"
+              />
+            </div>
 
             {/* District & Thana */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 sm:mb-6">
@@ -264,7 +276,7 @@ export default function Checkout() {
             {/* Quantity */}
             <div className="flex items-center gap-3">
               <button
-              type="button"
+                type="button"
                 onClick={decrement}
                 className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center"
               >
@@ -272,7 +284,7 @@ export default function Checkout() {
               </button>
               <span className="w-8 text-center font-medium">{quantity}</span>
               <button
-              type="button"
+                type="button"
                 onClick={increment}
                 className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center"
               >
@@ -341,7 +353,12 @@ export default function Checkout() {
               {/* CASH ON DELIVERY */}
               <div className="pt-2">
                 <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="radio" checked name="payment" className="w-4 h-4" />
+                  <input
+                    type="radio"
+                    checked
+                    name="payment"
+                    className="w-4 h-4"
+                  />
                   <span className="text-gray-700 font-medium">
                     Cash on delivery
                   </span>
