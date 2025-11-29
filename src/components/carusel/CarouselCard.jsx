@@ -29,7 +29,7 @@ const CarouselCard = () => {
             Contact: <span className="font-normal">0187112274</span>
           </span>
           <span className="font-medium">
-            Email: <span className="font-normal">fashion@solonee.com</span>
+            Email: <span className="font-normal">solonee25@gmail.com</span>
           </span>
         </div>
       </div>
