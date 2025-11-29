@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
-import sizeChart from "../assets/cloth-size.png";
+import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
+import sizeChart from "../assets/cloth-size.png";
 
 export default function OrderNow() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { clickedProduct } = location.state;
+
+  const { clickedProduct, allProducts } = location.state;
 
   const [mainImage, setMainImage] = useState(clickedProduct.img);
   const [selectedSize, setSelectedSize] = useState("S");
@@ -20,7 +21,7 @@ export default function OrderNow() {
     { label: "XXL", available: false },
   ];
 
-  // Use clicked product child images if available
+  // side images (color images)
   const sideImages = [clickedProduct.img, ...(clickedProduct.child || [])];
 
   const handleOrderNow = () => {
@@ -28,7 +29,7 @@ export default function OrderNow() {
       state: {
         product: clickedProduct,
         size: selectedSize,
-        image: mainImage, // pass selected image
+        image: mainImage,
       },
     });
   };
@@ -37,7 +38,8 @@ export default function OrderNow() {
     <div className="bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {/* LEFT IMAGE */}
+
+          {/* LEFT IMAGE SECTION */}
           <div className="flex gap-4">
             <div className="flex flex-col gap-3 w-20">
               {sideImages.map((img, idx) => (
@@ -62,18 +64,19 @@ export default function OrderNow() {
             </div>
           </div>
 
-          {/* RIGHT DETAILS */}
+          {/* RIGHT PRODUCT DETAILS */}
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold text-[#101828] mb-4">
               {clickedProduct.title}
             </h1>
+
             <div className="mb-6">
               <span className="text-2xl font-bold text-[#101828]">
                 ৳ {clickedProduct.price.toFixed(2)}
               </span>
             </div>
 
-            {/* COLOR SELECTION */}
+            {/* COLOR IMAGES */}
             <div className="mb-6">
               <p className="text-[#9599A0] text-sm mb-3">Color:</p>
               <div className="flex gap-3">
@@ -91,12 +94,13 @@ export default function OrderNow() {
               </div>
             </div>
 
-            {/* SIZE SELECTION */}
-            <div className="mb-6 ">
+            {/* SIZE SELECT */}
+            <div className="mb-6">
               <p className="text-[#9599A0] text-sm font-semibold mb-3">
                 Select Size: <span className="text-black">{selectedSize}</span>
               </p>
-              <div className="flex gap-2  flex-wrap">
+
+              <div className="flex gap-2 flex-wrap">
                 {sizes.map((size) => (
                   <button
                     key={size.label}
@@ -106,93 +110,100 @@ export default function OrderNow() {
                       selectedSize === size.label
                         ? "bg-[#CDAB63] text-white"
                         : "bg-gray-200 text-gray-700 hover:bg-[#CDAB63] hover:text-white"
-                    } ${!size.available ? "line-through opacity-50 cursor-not-allowed" : ""}`}
+                    } ${!size.available ? "opacity-50 line-through cursor-not-allowed" : ""}`}
                   >
                     {size.label}
                   </button>
                 ))}
               </div>
 
-           <button
-  onClick={handleOrderNow}
-  className="w-full md:w-[280px] bg-black mb-4 hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
->
-  Order Now
-</button>
-
-
+              {/* ORDER BUTTON */}
+              <button
+                onClick={handleOrderNow}
+                className="w-full md:w-[280px] bg-black mb-4 hover:bg-[#2A2828] text-white font-bold py-3 px-6 rounded-lg transition mt-4"
+              >
+                Order Now
+              </button>
 
               {/* SOCIAL SHARE */}
               <div className="flex items-center gap-4 p-2 pt-4 border-t border-gray-300">
                 <span className="text-[#737A87] text-sm">Share :</span>
-               <a href="https://www.facebook.com/share/1ACcxe3Xs2/" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
-               <a href="https://www.instagram.com/solonee.cloth/" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>  
+                <a href="https://www.facebook.com/share/1ACcxe3Xs2/" target="_blank" rel="noopener noreferrer">
+                  <FaFacebookF />
+                </a>
+                <a href="https://www.instagram.com/solonee.cloth/" target="_blank" rel="noopener noreferrer">
+                  <FaInstagram />
+                </a>
               </div>
 
               {/* SIZE CHART */}
               <div className="mt-6">
                 <div className="flex gap-2 mb-2">
-                  <button className="bg-gray-200 px-3 py-1 text-sm rounded-md">
-                    NCh
-                  </button>
-                  <button className="bg-[#EFEFEF] px-3 py-1 text-sm rounded-md">
-                    Cm
-                  </button>
+                  <button className="bg-gray-200 px-3 py-1 text-sm rounded-md">NCh</button>
+                  <button className="bg-[#EFEFEF] px-3 py-1 text-sm rounded-md">Cm</button>
                 </div>
+
                 <img width={250} height={200} src={sizeChart} alt="Size Chart" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* YOU MAY ALSO LIKE */}
-        {sideImages.length > 1 && (
+        {/* =========================== */}
+        {/*  YOU MAY ALSO LIKE SECTION */}
+        {/* =========================== */}
+
+        {allProducts && (
           <div className="border-t border-gray-300 pt-12 mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">
               You may also like
             </h2>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {sideImages.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg"
-                >
-                  <div className="relative flex justify-center items-center">
-                    {/* <span className="absolute top-4 left-4 bg-[#FA4A69] text-white rounded-3xl px-3 py-1 font-bold">
-                      {clickedProduct.discount || "-15%"}
-                    </span> */}
-                    <img
-                      src={img}
-                      alt={clickedProduct.title}
-                      className="w-full h-auto object-cover"
-                    />
-                  </div>
-                  <div className="p-4 sm:p-6 flex flex-col flex-1">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                        {clickedProduct.title}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        {/* <span className="text-[#0000004D] line-through text-sm sm:text-lg">
-                          ${clickedProduct.oldPrice}
-                        </span> */}
+              {allProducts
+                .filter((p) => p.id !== clickedProduct.id) // current বাদ
+                .slice(0, 4) // only 4 suggestions
+                .map((product) => (
+                  <div
+                    key={product.id}
+                    className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg"
+                  >
+                    <div className="relative flex justify-center items-center">
+                      <img
+                        src={product.img}
+                        alt={product.title}
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+
+                    <div className="p-4 sm:p-6 flex flex-col flex-1">
+                      <div className="flex justify-between items-center mb-2">
+                        <h3 className="text-lg sm:text-xl font-bold text-gray-900">
+                          {product.title}
+                        </h3>
+
                         <span className="text-md sm:text-xl font-bold text-gray-900">
-                          ৳{clickedProduct.price}
+                          ৳{product.price}
                         </span>
                       </div>
+
+                      <p className="text-[#B3B3B3] text-xs sm:text-sm mb-4">
+                        {product.stock}
+                      </p>
+
+                      <button
+                        onClick={() =>
+                          navigate(`/product-details/${product.id}`, {
+                            state: { clickedProduct: product, allProducts },
+                          })
+                        }
+                        className="w-full bg-black text-white text-xs sm:text-sm py-2 sm:py-3 rounded-md hover:bg-[#2A2828] transition mt-auto"
+                      >
+                        ORDER NOW
+                      </button>
                     </div>
-                    <p className="text-[#B3B3B3] text-xs sm:text-sm mb-4">
-                      {clickedProduct.stock}
-                    </p>
-                    <button
-                      onClick={() => setMainImage(img)}
-                      className="w-full bg-black text-white text-xs sm:text-sm py-2 sm:py-3 rounded-md hover:bg-[#2A2828] transition mt-auto"
-                    >
-                      ORDER NOW
-                    </button>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         )}
