@@ -4,6 +4,7 @@ import BkashLogo from "../assets/BKash_Logo_icon-700x662 1.png";
 import { NavLink } from "react-router";
 import { ChevronDown } from "lucide-react";
 import { bdLocations } from "../data/bdLocations";
+import toast from "react-hot-toast";
 
 export default function Checkout() {
   const location = useLocation();
@@ -26,6 +27,8 @@ export default function Checkout() {
     );
   }
 
+  console.log(product, "product");
+
   const subtotal = product.price * quantity;
   const shipping = 150;
   const total = subtotal + shipping;
@@ -33,19 +36,54 @@ export default function Checkout() {
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // create formdata
     const formData = new FormData(e.target);
     // add product details to formdata
+    formData.append("product_Name", product?.title);
+    formData.append("district", district);
+    formData.append("thana", thana);
     formData.append("quantity", quantity);
     formData.append("subtotal", subtotal);
-    formData.append("shipping", shipping);
     formData.append("total", total);
+    formData.append("selectedSize", selectedSize);  
 
-    // Handle form submission logic here
-    console.log("Form submitted!");
+    console.log(
+      formData.forEach((value, key) => console.log(key, value)),
+      "formdata 47"
+    );
+
+    try {
+      // send formdata to server
+      if(!district || !thana || !quantity || !subtotal || !total || !selectedSize){
+        toast.error("Please select district and thana");
+        return;
+      }
+      // show loading toast
+      const loadingToast = toast.loading("Submitting order...");
+
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbwDJ4Pm9E00HTgiPaHRSY3jCHVi-jyS4jcrhevoGXaPnw0WjVaggIoBmkq-mGCzFfxN6Q/exec",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      // parse response as json
+      const data = await response.json();
+      // close loading toast
+      if(!data.result){
+        toast.error("Order submission failed!");
+        return;
+      }
+      toast.success("Order submitted successfully!", {
+        id: loadingToast,
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -54,7 +92,10 @@ export default function Checkout() {
         Checkout
       </h1>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
+      >
         {/* LEFT SIDE */}
         <div className="lg:col-span-2 space-y-6 sm:space-y-8">
           <div className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 w-full shadow">
@@ -71,22 +112,30 @@ export default function Checkout() {
                 type="text"
                 name="username"
                 placeholder="Full Name"
+                required
                 className="w-full px-4 py-3 border bg-[#F7F7F7] border-gray-300 rounded-lg"
               />
             </div>
 
             {/* Phone */}
-            <div className="mb-4 sm:mb-6">
-              <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
-                Phone Number :
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                className="w-full px-4 py-3 border bg-[#F7F7F7] border-gray-300 rounded-lg"
-              />
-            </div>
+           {/* Phone */}
+<div className="mb-4 sm:mb-6">
+  <label className="block text-sm font-medium text-gray-900 mb-1 sm:mb-2">
+    Phone Number :
+  </label>
+  <input
+    type="text"
+    name="phone"
+    required
+    maxLength={11}
+    placeholder="Phone Number"
+    onInput={(e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Only number
+    }}
+    className="w-full px-4 py-3 border bg-[#F7F7F7] border-gray-300 rounded-lg"
+  />
+</div>
+
 
             {/* District & Thana */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 sm:mb-6">
@@ -152,6 +201,7 @@ export default function Checkout() {
               <input
                 type="text"
                 name="address"
+                required
                 placeholder="Full Address"
                 className="w-full px-4 py-3 border border-gray-300 bg-[#F7F7F7] rounded-lg"
               />
@@ -171,16 +221,16 @@ export default function Checkout() {
               <li className="flex items-start">
                 <span className="mr-2 sm:mr-3 text-base">•</span>
                 <span>Delivery charges: ৳150.</span>
-                
               </li>
               <li className="flex items-start">
                 <span className="mr-2 sm:mr-3 text-base">•</span>
                 <span> 150 taka must be paid before delivery.</span>
-                
               </li>
               <li className="flex items-start">
                 <span className="mr-2 sm:mr-3 text-base">•</span>
-                <span>Orders are confirmed only after payment verification.</span>
+                <span>
+                  Orders are confirmed only after payment verification.
+                </span>
               </li>
             </ul>
           </div>
@@ -188,7 +238,7 @@ export default function Checkout() {
 
         {/* RIGHT SIDE */}
         <div className="col-span-1">
-          <div    className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 sticky top-4 sm:top-8 space-y-4">
+          <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 sticky top-4 sm:top-8 space-y-4">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
               Product Details
             </h2>
@@ -201,9 +251,7 @@ export default function Checkout() {
                 className="w-20 h-20 rounded-lg object-cover"
               />
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">
-                  {product.title}
-                </h3>
+                <h3 className="font-semibold text-gray-900">{product.title}</h3>
                 <p className="text-sm text-gray-500">
                   Size: {selectedSize || "S"}
                 </p>
@@ -216,6 +264,7 @@ export default function Checkout() {
             {/* Quantity */}
             <div className="flex items-center gap-3">
               <button
+              type="button"
                 onClick={decrement}
                 className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center"
               >
@@ -223,6 +272,7 @@ export default function Checkout() {
               </button>
               <span className="w-8 text-center font-medium">{quantity}</span>
               <button
+              type="button"
                 onClick={increment}
                 className="w-8 h-8 rounded-lg border border-gray-300 flex items-center justify-center"
               >
@@ -266,6 +316,7 @@ export default function Checkout() {
                     type="text"
                     value={transactionId}
                     name="transactionId"
+                    required
                     placeholder="Trx id"
                     onChange={(e) => setTransactionId(e.target.value)}
                     className="w-36 text-left border border-gray-300 rounded px-2 py-1"
@@ -290,7 +341,7 @@ export default function Checkout() {
               {/* CASH ON DELIVERY */}
               <div className="pt-2">
                 <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="radio" name="payment" className="w-4 h-4" />
+                  <input type="radio" checked name="payment" className="w-4 h-4" />
                   <span className="text-gray-700 font-medium">
                     Cash on delivery
                   </span>
@@ -300,7 +351,11 @@ export default function Checkout() {
               {/* TERMS */}
               <div>
                 <label className="flex items-start gap-3 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 mt-1" defaultChecked />
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 mt-1"
+                    defaultChecked
+                  />
                   <span className="text-sm text-[#00AE7A] leading-5">
                     Accept Terms & Conditions and Privacy Policy{" "}
                     <span className="text-black">of salonee.shop</span>
@@ -311,8 +366,9 @@ export default function Checkout() {
 
             {/* CONFIRM ORDER BUTTON */}
             <button
-            type="submit"
+              type="submit"
               // to="/order-animation"
+
               className="w-full block text-center bg-black text-white font-bold py-3 rounded-lg mt-4"
             >
               Order Now
